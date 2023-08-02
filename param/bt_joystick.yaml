@@ -1,4 +1,6 @@
-bt_mac_address: "FF:FF:80:06:6C:59"
+bt_mac_address: "FF:FF:DE:12:AE:0F"
+output_to_joy: 1
+output_to_cmd_vel: 1
 speed_stopped: 0.0
 speed_fwd_normal: 0.1
 speed_fwd_turning: 0.1

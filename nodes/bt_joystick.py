@@ -1,4 +1,4 @@
-#!/usr/bin/python -u
+#!/usr/bin/python3 -u
 
 #
 # ROS node to interface a Magicsee R1 ring-held Bluetooth LE joystick/gamepad for /cmd_vel robot control
@@ -150,7 +150,7 @@ class Requester(GATTRequester):
         # Optionally show the data in hex printout but do NOT leave active for production
         if g_debug == True:
             for b in data:
-                print(hex(ord(b)), end=' ')
+                print(hex(b), end=' ')
             print("")
 
         # Walk the data and pick out joystick and button data.
@@ -159,13 +159,13 @@ class Requester(GATTRequester):
         for b in data:
             if index == 0: 
                 # get the type of notification packet
-                packetType = int(ord(b))
+                packetType = int(b)
             else:
                 if packetType == int(0x1b):
                     if index == 3:
-                        g_buttonBits = ord(b)
+                        g_buttonBits = b
                     if index == 4:
-                        g_joystickBits = ord(b)
+                        g_joystickBits = b
             index = index + 1
         self.wakeup.set()
 
@@ -227,7 +227,7 @@ class ReceiveNotificationLooper(object):
                 # remove True for wait so can run as user  self.requester.connect(True)
                 self.requester.connect(True)
                 g_connectSuccessful = 1;
-        except RuntimeError,e: 
+        except RuntimeError as e: 
             logDebug("Exception in connect: " + e.message)
             g_connectSuccessful = 0;
             time.sleep(0.3)
@@ -534,7 +534,7 @@ if __name__ == '__main__':
  
     try:
         btjoystick()
-    except RuntimeError,e: 
+    except RuntimeError as e: 
         logAlways("Exception in bt_joystick: " + e.message)
     except Exception:
         logAlways("bt_joystick node terminated.")
